@@ -1,0 +1,29 @@
+.albumText {
+  background-color: transparent;
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.albumText:hover {
+  color: blue;
+}
+
+.albumText:active {
+  color: unset;
+}
+
+.deleteButton {
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  border: 1px solid grey;
+  border-radius: 0.3rem;
+}
+
+.deleteButton:hover {
+  background-color: maroon;
+}
+
+.deleteButton:active {
+  background-color: red;
+}
