@@ -1,0 +1,16 @@
+.titleLabel {
+  margin-right: 1rem;
+}
+
+.titleInput {
+  width: 35rem;
+}
+
+.updateButton {
+  display: block;
+  background-color: green;
+  color: white;
+  border: 1px solid grey;
+  border-radius: 0.3rem;
+  padding: 0.5rem 1rem;
+}
