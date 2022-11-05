@@ -19,14 +19,24 @@ export const jsonServerApi = createApi({
       query: (id) => `albums/${id}`,
       providesTags: (_result, _error, id) => [{ type: 'Albums', id }],
     }),
+    updateAlbum: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `albums/${id}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: (_result, _error, arg) => [
+        { type: 'Albums', id: arg.id },
+      ],
+    }),
     deleteAlbum: builder.mutation({
       query: (id) => ({
         url: `albums/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: (_result, _error, arg) => [
+        { type: 'Albums', id: arg.id },
         { type: 'Albums', id: 'LIST' },
-        // { type: 'Albums', id: arg.id },
       ],
     }),
 
@@ -46,6 +56,7 @@ export const jsonServerApi = createApi({
 export const {
   useGetAlbumsQuery,
   useGetAlbumQuery,
+  useUpdateAlbumMutation,
   useDeleteAlbumMutation,
   useGetPhotosQuery,
 } = jsonServerApi;
