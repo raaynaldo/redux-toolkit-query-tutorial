@@ -1,25 +1,35 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useGetAlbumQuery } from '../../app/services/jsonServerApi';
+import {
+  useGetAlbumQuery,
+  useUpdateAlbumMutation,
+} from '../../app/services/jsonServerApi';
 
 import styles from './SelectedAlbum.module.css';
 
 export default function SelectedAlbum(props) {
   const { id } = props;
-  const { data: album, isUninitialized } = useGetAlbumQuery(id, { skip: !id });
-  const [title, setTitle] = useState(album?.title);
+  const {
+    data: album,
+    isUninitialized,
+    isError,
+  } = useGetAlbumQuery(id, { skip: !id });
+  const [updateAlbum] = useUpdateAlbumMutation();
+  const [title, setTitle] = useState('');
 
   useEffect(() => {
-    setTitle(album?.title);
+    if (album?.title) {
+      setTitle(album?.title);
+    }
   }, [album?.title]);
 
-  if (isUninitialized) {
+  if (isUninitialized || isError) {
     return <div>No Album is selected</div>;
   }
 
   function updateTitle(event) {
     event.preventDefault();
-    console.log(event.target);
+    updateAlbum({ id: album?.id, data: { title } });
   }
 
   return (
