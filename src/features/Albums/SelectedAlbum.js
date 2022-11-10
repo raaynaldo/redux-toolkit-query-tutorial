@@ -4,6 +4,7 @@ import {
   useGetAlbumQuery,
   useUpdateAlbumMutation,
 } from '../../app/services/jsonServerApi';
+import { ColorRing } from 'react-loader-spinner';
 
 import styles from './SelectedAlbum.module.css';
 
@@ -12,6 +13,7 @@ export default function SelectedAlbum(props) {
   const {
     data: album,
     isUninitialized,
+    isFetching,
     isError,
   } = useGetAlbumQuery(id, { skip: !id });
   const [updateAlbum] = useUpdateAlbumMutation();
@@ -25,6 +27,20 @@ export default function SelectedAlbum(props) {
 
   if (isUninitialized || isError) {
     return <div>No Album is selected</div>;
+  }
+
+  if (isFetching) {
+    return (
+      <ColorRing
+        visible={true}
+        height='100'
+        width='100'
+        ariaLabel='blocks-loading'
+        wrapperStyle={{ marginBottom: '1rem' }}
+        wrapperClass='blocks-wrapper'
+        colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+      />
+    );
   }
 
   function updateTitle(event) {
